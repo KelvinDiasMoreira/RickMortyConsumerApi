@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function userAPI() {
+export default function userAPI( nextpage) {
   const [rickData, setRickData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+
   useEffect(() => {
     axios
-      .get("https://rickandmortyapi.com/api/character?page=1")
+      .get(`https://rickandmortyapi.com/api/character?page=${nextpage}`)
       .then((response) => {
         const characters = response.data.results;
         const episodes = characters.map((char) => {
@@ -28,7 +29,7 @@ export default function userAPI() {
       })
       .catch((err) => new Error(err))
       .finally(setIsLoading(false));
-  }, []);
+  }, [nextpage]);
 
   return { rickData, isLoading };
 }
